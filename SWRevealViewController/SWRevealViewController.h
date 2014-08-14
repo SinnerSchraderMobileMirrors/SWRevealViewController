@@ -29,6 +29,9 @@
  RELEASE NOTES
  
  
+ Version 2.2.1b (Beta)
+  - Bug fix ?
+ 
  Version 2.2.0 (Current Version)
  
  - State Restoration support.
