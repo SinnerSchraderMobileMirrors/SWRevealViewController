@@ -1527,12 +1527,12 @@ const int FrontViewPositionNone = 0xff;
     BOOL positionIsChanging = (_frontViewPosition != newPosition);
     
     BOOL appear =
-        (_frontViewPosition >= FrontViewPositionRightMostRemoved || _frontViewPosition <= FrontViewPositionLeftSideMostRemoved) &&
+        (_frontViewPosition >= FrontViewPositionRightMostRemoved || _frontViewPosition <= FrontViewPositionLeftSideMostRemoved || _frontViewPosition == FrontViewPositionNone) &&
         (newPosition < FrontViewPositionRightMostRemoved && newPosition > FrontViewPositionLeftSideMostRemoved);
     
     BOOL disappear =
         (newPosition >= FrontViewPositionRightMostRemoved || newPosition <= FrontViewPositionLeftSideMostRemoved ) &&
-        (_frontViewPosition < FrontViewPositionRightMostRemoved && _frontViewPosition > FrontViewPositionLeftSideMostRemoved);
+        (_frontViewPosition < FrontViewPositionRightMostRemoved && _frontViewPosition > FrontViewPositionLeftSideMostRemoved && _frontViewPosition != FrontViewPositionNone);
     
     if ( positionIsChanging )
     {
@@ -1569,7 +1569,7 @@ const int FrontViewPositionNone = 0xff;
         newPosition = FrontViewPositionLeft;
 
     BOOL appear = (_rearViewPosition <= FrontViewPositionLeft || _rearViewPosition == FrontViewPositionNone) && newPosition > FrontViewPositionLeft;
-    BOOL disappear = (newPosition <= FrontViewPositionLeft || newPosition == FrontViewPositionNone) && _rearViewPosition > FrontViewPositionLeft;
+    BOOL disappear = newPosition <= FrontViewPositionLeft && (_rearViewPosition > FrontViewPositionLeft && _rearViewPosition != FrontViewPositionNone);
     
     if ( appear )
         [_contentView prepareRearViewForPosition:newPosition];
@@ -1586,8 +1586,8 @@ const int FrontViewPositionNone = 0xff;
     if ( _rightViewController == nil && newPosition < FrontViewPositionLeft )
         newPosition = FrontViewPositionLeft;
 
-    BOOL appear = _rightViewPosition >= FrontViewPositionLeft && newPosition < FrontViewPositionLeft ;
-    BOOL disappear = newPosition >= FrontViewPositionLeft && _rightViewPosition < FrontViewPositionLeft;
+    BOOL appear = (_rightViewPosition >= FrontViewPositionLeft || _rightViewPosition == FrontViewPositionNone) && newPosition < FrontViewPositionLeft ;
+    BOOL disappear = newPosition >= FrontViewPositionLeft && (_rightViewPosition < FrontViewPositionLeft && _rightViewPosition != FrontViewPositionNone);
     
     if ( appear )
         [_contentView prepareRightViewForPosition:newPosition];
